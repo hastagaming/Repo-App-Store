@@ -32,7 +32,7 @@ class AuthRepository @Inject constructor(
         receivedState: String
     ): Flow<Result<AuthUser>> = flow {
         if (expectedState != receivedState) {
-            emit(Result.failure(Exception("OAuth state mismatch, kemungkinan serangan CSRF")))
+            emit(Result.failure(Exception("OAuth state mismatch, possible CSRF attack")))
             return@flow
         }
         try {
@@ -70,8 +70,8 @@ class AuthRepository @Inject constructor(
             )
             emit(Result.success(user.toAuthUser(token, "bearer")))
         } catch (e: Exception) {
-            Timber.e(e, "Login PAT gagal")
-            emit(Result.failure(Exception("Token tidak valid atau tidak memiliki akses")))
+            Timber.e(e, "PAT login failed")
+            emit(Result.failure(Exception("Token is invalid or does not have access")))
         }
     }
 
@@ -87,7 +87,7 @@ class AuthRepository @Inject constructor(
             val user = apiService.getCurrentUser(authHeader)
             emit(Result.success(user.toAuthUser(token, "bearer")))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal memuat sesi")
+            Timber.e(e, "Failed to load session")
             emit(Result.success(null))
         }
     }
