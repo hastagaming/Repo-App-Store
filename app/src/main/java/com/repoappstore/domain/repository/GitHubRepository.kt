@@ -32,11 +32,11 @@ class GitHubRepository @Inject constructor(
     fun getUserGitHubRepositories(): Flow<Result<List<GitHubRepository>>> = flow {
         try {
             val auth = authService.getAuthHeader()
-                ?: throw Exception("Belum login, silakan login terlebih dahulu")
+                ?: throw Exception("Not logged in yet, please log in first")
             val repos = apiService.getUserRepositories(auth = auth)
             emit(Result.success(repos))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal memuat repository user")
+            Timber.e(e, "Failed to load user repository")
             emit(Result.failure(e))
         }
     }
@@ -59,7 +59,7 @@ class GitHubRepository @Inject constructor(
             val id = repositoryDao.insert(repository)
             Result.success(repository.copy(id = id))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal menambah repository")
+            Timber.e(e, "Failed to add repository")
             Result.failure(e)
         }
     }
@@ -83,7 +83,7 @@ class GitHubRepository @Inject constructor(
             )
             emit(Result.success(releases))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal memuat releases")
+            Timber.e(e, "Failed to load releases")
             emit(Result.failure(e))
         }
     }
@@ -120,7 +120,7 @@ class GitHubRepository @Inject constructor(
             repositoryDao.updateLastSync(repository.id, LocalDateTime.now().toString())
             Result.success(apps.size)
         } catch (e: Exception) {
-            Timber.e(e, "Gagal sync repository")
+            Timber.e(e, "Failed to sync repository")
             Result.failure(e)
         }
     }
@@ -159,8 +159,8 @@ class GitHubRepository @Inject constructor(
             )
             emit(Result.success(readme))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal memuat README")
-            emit(Result.failure(Exception("README tidak tersedia untuk repository ini")))
+            Timber.e(e, "Failed to load README")
+            emit(Result.failure(Exception("README is not available for this repository")))
         }
     }
 
@@ -174,7 +174,7 @@ class GitHubRepository @Inject constructor(
             )
             emit(Result.success(result.items))
         } catch (e: Exception) {
-            Timber.e(e, "Gagal mencari repository di GitHub")
+            Timber.e(e, "Failed to find repository on GitHub")
             emit(Result.failure(e))
         }
     }
