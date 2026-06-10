@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Repo App Store</string>
+    <string name="login_title">Sign in with GitHub</string>
+    <string name="login_oauth">Login with OAuth</string>
+    <string name="login_pat">Use Personal Access Token</string>
+    <string name="repositories">Repositories</string>
+    <string name="explore">Search</string>
+    <string name="downloads">Download</string>
+    <string name="settings">Settings</string>
+    <string name="search_hint">Searching Application...</string>
+    <string name="view_on_github">view on github</string>
+    <string name="readme">README</string>
+    <string name="releases">Release</string>
+    <string name="install">Install</string>
+    <string name="update">Update</string>
+    <string name="installed">Installed</string>
+    <string name="open">Open</string>
+    <string name="uninstall">Uninstall</string>
+</resources>
